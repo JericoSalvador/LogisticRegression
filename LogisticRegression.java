@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.IntToDoubleFunction;
 import java.lang.*; 
 
 public class LogisticRegression {
@@ -55,7 +56,7 @@ public class LogisticRegression {
         /** Takes a test instance as input and outputs the predicted label **/
         /** This function should call probPred1() **/
         public int predict(double[] x) {
-            if(probPred1(x) > .5){
+            if(probPred1(x) >= .5){
                 return 1; 
             }
             else {
@@ -71,6 +72,27 @@ public class LogisticRegression {
             int TP=0, TN=0, FP=0, FN=0; // TP = True Positives, TN = True Negatives, FP = False Positives, FN = False Negatives
 
             // TODO: write code here to compute the above mentioned variables
+            for(int i = 0; i < testInstances.size(); i++){
+                int actualValue = testInstances.get(i).label;
+                int prediction = predict(testInstances.get(i).x); 
+                if(prediction == 1){
+                    if(prediction == actualValue){
+                        TP += 1; 
+                    }
+                    else {
+                        FP += 1;
+                    }
+                }
+                else if(prediction == 0){
+                    if(prediction == actualValue){
+                        TN += 1;
+                    }
+                    else{
+                        FN += 1; 
+                    }
+                }
+            }
+            acc = (double)(TP + TN) / (double)(TP + TN + FP + FP);
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
