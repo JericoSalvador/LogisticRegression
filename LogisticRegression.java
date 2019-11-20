@@ -94,6 +94,8 @@ public class LogisticRegression {
             p_neg = (double) TN / (TN + FN);
             r_pos = (double) TP / (TP + FN); 
             r_neg = (double) TN / (TN + FP); 
+            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos); 
+            f_neg = 2 * p_pos * r_neg / (p_neg + r_neg); 
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
