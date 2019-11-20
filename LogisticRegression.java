@@ -20,15 +20,16 @@ public class LogisticRegression {
 
         /** TODO: Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
         public LogisticRegression(int n) { // n is the number of weights to be learned
+            this.weights = new double[n];
             for(int i = 0; i < n ; i ++){
-                weights[i] = 0; 
+                this.weights[i] = 0.0; 
             }
         }
 
         /** TODO: Implement the function that returns the L2 norm of the weight vector **/
         private double weightsL2Norm(){
             double sum = 0.0; 
-            for(double w : weights){
+            for(double w : this.weights){
                 sum = sum + w * w; 
             }
             return Math.sqrt(sum); 
@@ -36,7 +37,7 @@ public class LogisticRegression {
 
         /** TODO: Implement the sigmoid function **/
         private static double sigmoid(double z) {
-            return Math.exp(z) / (Math.exp(z) + 1); 
+            return 1 / (Math.exp(-1 * z) + 1); 
         }
 
         /** TODO: Helper function for prediction **/
@@ -45,7 +46,7 @@ public class LogisticRegression {
         private double probPred1(double[] x) {
             double sum = 0; 
             for(int i = 0; i < x.length; i++){
-                sum = sum + x[i] * weights[i]; 
+                sum = sum + x[i] * this.weights[i]; 
             }
             return sigmoid(sum);
         }
@@ -87,9 +88,12 @@ public class LogisticRegression {
                 double lik = 0.0; // Stores log-likelihood of the training data for this iteration
                 for (int i=0; i < instances.size(); i++) {
                     // TODO: Train the model
-
+                    double prob =  probPred1(instances.get(i).x);
+                    for(int j = 0; j < weights.length; j++){
+                        this.weights[j] = this.weights[j] + this.rate * instances.get(i).x[j] * (instances.get(i).label - prob);
+                    }
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
-				}
+                }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
         }
@@ -100,6 +104,8 @@ public class LogisticRegression {
 
             /** TODO: Constructor for initializing the Instance object **/
             public LRInstance(int label, double[] x) {
+                this.label = label; 
+                this.x = x; 
             }
         }
 
