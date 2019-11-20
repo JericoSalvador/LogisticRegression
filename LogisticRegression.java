@@ -56,7 +56,7 @@ public class LogisticRegression {
         /** Takes a test instance as input and outputs the predicted label **/
         /** This function should call probPred1() **/
         public int predict(double[] x) {
-            if(probPred1(x) >= .5){
+            if(probPred1(x) >= (double) 0.5){
                 return 1; 
             }
             else {
@@ -93,6 +93,8 @@ public class LogisticRegression {
                 }
             }
             acc = (double)(TP + TN) / (double)(TP + TN + FP + FP);
+            p_pos = (double) TP / (TP + FP); 
+            p_neg = (double) TN / (TN + FN); 
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
@@ -111,7 +113,7 @@ public class LogisticRegression {
                 for (int i=0; i < instances.size(); i++) {
                     // TODO: Train the model
                     double [] X = instances.get(i).x; 
-                    double Y = instances.get(i).label; 
+                    int Y = instances.get(i).label; 
                     double prob =  probPred1(X);
                     for(int j = 0; j < weights.length; j++){
                         this.weights[j] = this.weights[j] + this.rate * X[j] * (Y - prob);
