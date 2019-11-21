@@ -51,7 +51,7 @@ public class LogisticRegression {
                 sum = sum + x[i] * this.weights[i];
             }
             // Since sigmoid returns a value between 0-1.
-            // this returns the probability of our input vector (x[])
+            // this returns the probability of our input vector (x[]) dotted
             // with weight vector (this.weight[])
             return sigmoid(sum);
         }
@@ -117,7 +117,6 @@ public class LogisticRegression {
         /** Train the Logistic Regression using Stochastic Gradient Ascent **/
         /** Also compute the log-likelihood of the data in this function **/
         public void train(List<LRInstance> instances) {
-
             for (int n = 0; n < ITERATIONS; n++) {
                 double lik = 0.0; // Stores log-likelihood of the training data for this iteration
                 for (int i=0; i < instances.size(); i++) {
@@ -131,8 +130,12 @@ public class LogisticRegression {
 
                     }
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
-                    // for every data instance in X
-                        lik = Y * (Math.log(prob)) + (1 - Y) * (Math.log(1-prob));
+                    // this says: for correct label Y, multiply times log of prob x is labeled correctly (1),
+                    // minus incorrect label times log of probability of X being labeled incorrectly (0).
+                    // as interpreted from:
+                    // https://web.stanford.edu/class/archive/cs/cs109/cs109.1178/lectureHandouts/220-logistic-regression.pdf
+                        //lik = Y * (Math.log(prob)) - (1 - Y) * (Math.log(1-prob));
+                        lik =
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
