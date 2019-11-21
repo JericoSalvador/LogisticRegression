@@ -1,0 +1,9 @@
+3.3 L2 regularized logistic regression
+1. 1296
+2. test: 96.36% train: 95.27% 
+3.  159     12
+     54   1169
+4. The performance for the training set decreases while the performance for the test set increases from normal
+    logistic regression to one with Regularization. Because regularization is to avoid overfitting it makes 
+    a more general classification thus mis-classifying more training data but does better when classifying new data. 
+5. 
