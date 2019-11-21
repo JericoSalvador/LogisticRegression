@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.IntToDoubleFunction;
-import java.lang.*; 
+import java.lang.*;
+import java.util.*;
 
 public class LogisticRegression {
 
@@ -25,27 +26,33 @@ public class LogisticRegression {
         }
 
         /** TODO: Implement the function that returns the L2 norm of the weight vector **/
+        // L2 norm and magnitude are equivalent wording.
+        // This function calcs the sqrt(every element ^ 2 together)
         private double weightsL2Norm(){
-            double sum = 0.0; 
+            double sum = 0.0;
             for(double w : this.weights){
-                sum = sum + w * w; 
+                sum = sum + w * w;
             }
-            return Math.sqrt(sum); 
+            return Math.sqrt(sum);
         }
 
         /** TODO: Implement the sigmoid function **/
         private static double sigmoid(double z) {
-            return 1 / (Math.exp(-1 * z) + 1); 
+            return 1 / (Math.exp(-1 * z) + 1);
         }
 
         /** TODO: Helper function for prediction **/
         /** Takes a test instance as input and outputs the probability of the label being 1 **/
         /** This function should call sigmoid() **/
         private double probPred1(double[] x) {
-            double sum = 0; 
+            double sum = 0;
+            // takes dot product of two arrays
             for(int i = 0; i < x.length; i++){
-                sum = sum + x[i] * this.weights[i]; 
+                sum = sum + x[i] * this.weights[i];
             }
+            // Since sigmoid returns a value between 0-1.
+            // this returns the probability of our input vector (x[])
+            // with weight vector (this.weight[])
             return sigmoid(sum);
         }
 
@@ -53,11 +60,12 @@ public class LogisticRegression {
         /** Takes a test instance as input and outputs the predicted label **/
         /** This function should call probPred1() **/
         public int predict(double[] x) {
+          // if the probability returns higher than .5, then w*x is classified as positive.
             if(probPred1(x) >= (double) 0.5){
-                return 1; 
+                return 1;
             }
             else {
-                return 0; 
+                return 0;
             }
         }
 
@@ -71,10 +79,10 @@ public class LogisticRegression {
             // TODO: write code here to compute the above mentioned variables
             for(int i = 0; i < testInstances.size(); i++){
                 int actualValue = testInstances.get(i).label;
-                int prediction = predict(testInstances.get(i).x); 
+                int prediction = predict(testInstances.get(i).x);
                 if(prediction == 1){
                     if(prediction == actualValue){
-                        TP += 1; 
+                        TP += 1;
                     }
                     else {
                         FP += 1;
@@ -85,17 +93,17 @@ public class LogisticRegression {
                         TN += 1;
                     }
                     else{
-                        FN += 1; 
+                        FN += 1;
                     }
                 }
             }
             acc = (double)(TP + TN) / (double)(TP + TN + FP + FP);
-            p_pos = (double) TP / (TP + FP); 
+            p_pos = (double) TP / (TP + FP);
             p_neg = (double) TN / (TN + FN);
-            r_pos = (double) TP / (TP + FN); 
-            r_neg = (double) TN / (TN + FP); 
-            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos); 
-            f_neg = 2 * p_pos * r_neg / (p_neg + r_neg); 
+            r_pos = (double) TP / (TP + FN);
+            r_neg = (double) TN / (TN + FP);
+            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
+            f_neg = 2 * p_pos * r_neg / (p_neg + r_neg);
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
@@ -109,20 +117,26 @@ public class LogisticRegression {
         /** Train the Logistic Regression using Stochastic Gradient Ascent **/
         /** Also compute the log-likelihood of the data in this function **/
         public void train(List<LRInstance> instances) {
+
             for (int n = 0; n < ITERATIONS; n++) {
                 double lik = 0.0; // Stores log-likelihood of the training data for this iteration
                 for (int i=0; i < instances.size(); i++) {
                     // TODO: Train the model
-                    double [] X = instances.get(i).x; 
-                    int Y = instances.get(i).label; 
-                    double prob =  probPred1(X);
-                    for(int j = 0; j < weights.length; j++){
+                    double [] X = instances.get(i).x;
+                    int Y = instances.get(i).label;
+                    double prob = probPred1(X);
+
+                    for(int j = 0; j < this.weights.length; j++){
                         this.weights[j] = this.weights[j] + this.rate * X[j] * (Y - prob);
+
                     }
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
+                    // for every data instance in X
+                        lik = Y * (Math.log(prob)) + (1 - Y) * (Math.log(1-prob));
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
+            // System.out.println("final weight vector: " + Arrays.toString(this.weights));
         }
 
         public static class LRInstance {
@@ -131,8 +145,8 @@ public class LogisticRegression {
 
             /** TODO: Constructor for initializing the Instance object **/
             public LRInstance(int label, double[] x) {
-                this.label = label; 
-                this.x = x; 
+                this.label = label;
+                this.x = x;
             }
         }
 
