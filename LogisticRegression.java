@@ -101,7 +101,7 @@ public class LogisticRegression {
                     }
                 }
             }
-            acc = (double)(TP + TN) / (double)(TP + TN + FP + FP);
+            acc = (double)(TP + TN) / (testInstances.size());
             p_pos = (double) TP / (TP + FP);
             p_neg = (double) TN / (TN + FN);
             r_pos = (double) TP / (TP + FN);
