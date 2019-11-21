@@ -136,7 +136,8 @@ public class LogisticRegression_withBias {
 
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
                     double product = dotProd(X); 
-                    lik = lik + (Y * product - Math.log(1 + Math.exp(product))); 
+                    double bias = this.weights[X.length]; 
+                    lik = lik + (Y * (product + bias) - Math.log(1 + Math.exp(product + bias))); 
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
