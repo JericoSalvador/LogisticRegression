@@ -145,7 +145,7 @@ public class LogisticRegression {
                     // Y is the ith label in our instance. (Y^l)
                     // dotProd = vector X dotted with Weight vector (SUM(w_i * X_i^l))
                     // prob = probability of X being 1. (EXP(SUM_0^d(w_i * X-i^l)))
-                    lik = (Y * dotProd(X)) - Math.log(1 + prob);
+                    lik = lik + (Y * Math.log(prob) + (1 - Y) * Math.log(1 - prob));
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
