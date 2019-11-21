@@ -38,7 +38,7 @@ public class LogisticRegression {
 
         /** TODO: Implement the sigmoid function **/
         private static double sigmoid(double z) {
-            return 1 / (Math.exp(-1 * z) + 1);
+            return 1.0 / (Math.exp(-1 * z) + 1);
         }
 
         /** TODO: Helper function for prediction **/
@@ -135,7 +135,7 @@ public class LogisticRegression {
                     // as interpreted from:
                     // https://web.stanford.edu/class/archive/cs/cs109/cs109.1178/lectureHandouts/220-logistic-regression.pdf
                         //lik = Y * (Math.log(prob)) - (1 - Y) * (Math.log(1-prob));
-                        lik =
+                        // lik =
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }

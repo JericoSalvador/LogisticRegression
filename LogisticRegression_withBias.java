@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.*;
+import java.util.*;
 
 public class LogisticRegression_withBias {
 
@@ -19,26 +21,46 @@ public class LogisticRegression_withBias {
 
         /** TODO: Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
         public LogisticRegression_withBias(int n) { // n is the number of weights to be learned
+            this.weights = new double[n+1]; 
+            //we will let the last term of the weight be the bias
         }
 
         /** TODO: Implement the function that returns the L2 norm of the weight vector **/
         private double weightsL2Norm(){
+            double sum = 0.0;
+            for(double w : this.weights){
+                sum = sum + w * w;
+            }
+            return Math.sqrt(sum);
         }
 
         /** TODO: Implement the sigmoid function **/
         private static double sigmoid(double z) {
+            return 1.0 / (Math.exp(-1 * z) + 1);
         }
 
         /** TODO: Helper function for prediction **/
         /** Takes a test instance as input and outputs the probability of the label being 1 **/
         /** This function should call sigmoid() **/
         private double probPred1(double[] x) {
+            double sum = 0;
+            // takes dot product of two arrays
+            for(int i = 0; i < x.length; i++){
+                sum = sum + x[i] * this.weights[i];
+            }
+            bias = this.weights[x.length]; 
+            sum += bias; 
+            // Since sigmoid returns a value between 0-1.
+            // this returns the probability of our input vector (x[]) dotted
+            // with weight vector (this.weight[])
+            return sigmoid(sum);
         }
 
         /** TODO: The prediction function **/
         /** Takes a test instance as input and outputs the predicted label **/
         /** This function should call probPred1() **/
         public int predict(double[] x) {
+            
         }
 
         /** This function takes a test set as input, call the predict() to predict a label for it, and prints the accuracy, P, R, and F1 score of the positive class and negative class and the confusion matrix **/
