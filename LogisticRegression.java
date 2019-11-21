@@ -45,15 +45,19 @@ public class LogisticRegression {
         /** Takes a test instance as input and outputs the probability of the label being 1 **/
         /** This function should call sigmoid() **/
         private double probPred1(double[] x) {
-            double sum = 0;
-            // takes dot product of two arrays
-            for(int i = 0; i < x.length; i++){
-                sum = sum + x[i] * this.weights[i];
-            }
             // Since sigmoid returns a value between 0-1.
             // this returns the probability of our input vector (x[]) dotted
             // with weight vector (this.weight[])
-            return sigmoid(sum);
+            return sigmoid(dotProd(x));
+        }
+
+        // returns the dot product of input vector x and our global weight vector.
+        private double dotProd(double[] x){
+          double sum = 0.0;
+          for(int i = 0; i < x.length; i++){
+              sum = sum + x[i] * this.weights[i];
+          }
+          return sum;
         }
 
         /** TODO: The prediction function **/
@@ -134,8 +138,14 @@ public class LogisticRegression {
                     // minus incorrect label times log of probability of X being labeled incorrectly (0).
                     // as interpreted from:
                     // https://web.stanford.edu/class/archive/cs/cs109/cs109.1178/lectureHandouts/220-logistic-regression.pdf
-                        //lik = Y * (Math.log(prob)) - (1 - Y) * (Math.log(1-prob));
-                        // lik =
+
+                    //lik = Y * (Math.log(prob)) + (1 - Y) * (Math.log(1-prob));
+                    // This is from slides 5-1 #24. l(W)=SUM_l(Y^l * {SUM_0^d(w_i*X_i^l)} - log(1+EXP(SUM_0^d(w_i * X_i^l))))
+                    // 2nd for-loop = SUM_l()
+                    // Y is the ith label in our instance. (Y^l)
+                    // dotProd = vector X dotted with Weight vector (SUM(w_i * X_i^l))
+                    // prob = probability of X being 1. (EXP(SUM_0^d(w_i * X-i^l)))
+                    lik = (Y * dotProd(X)) - Math.log(1 + prob);
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }
