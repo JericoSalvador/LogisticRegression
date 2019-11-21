@@ -106,8 +106,8 @@ public class LogisticRegression {
             p_neg = (double) TN / (TN + FN);
             r_pos = (double) TP / (TP + FN);
             r_neg = (double) TN / (TN + FP);
-            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
-            f_neg = 2 * p_pos * r_neg / (p_neg + r_neg);
+            f_pos = (2 * p_pos * r_pos) / (p_pos + r_pos);
+            f_neg = (2 * p_neg * r_neg) / (p_neg + r_neg);
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
@@ -146,8 +146,8 @@ public class LogisticRegression {
                     // dotProd = vector X dotted with Weight vector (SUM(w_i * X_i^l))
                     // prob = probability of X being 1. (EXP(SUM_0^d(w_i * X-i^l)))
                     // lik = lik + (Y * Math.log(prob) + (1 - Y) * Math.log(1 - prob));
-                    double product = dotProd(X); 
-                    lik = lik + (Y * product - Math.log(1 + Math.exp(product))); 
+                    double product = dotProd(X);
+                    lik = lik + (Y * product - Math.log(1 + Math.exp(product)));
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }

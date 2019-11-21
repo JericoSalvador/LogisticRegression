@@ -21,7 +21,7 @@ public class LogisticRegression_withBias {
 
         /** TODO: Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
         public LogisticRegression_withBias(int n) { // n is the number of weights to be learned
-            this.weights = new double[n+1]; 
+            this.weights = new double[n+1];
             //we will let the last term of the weight be the bias
         }
 
@@ -44,8 +44,8 @@ public class LogisticRegression_withBias {
         /** This function should call sigmoid() **/
         private double probPred1(double[] x) {
             // takes dot product of two arrays
-            double bias = this.weights[x.length]; 
-            double value = dotProd(x) + bias; 
+            double bias = this.weights[x.length];
+            double value = dotProd(x) + bias;
             // Since sigmoid returns a value between 0-1.
             // this returns the probability of our input vector (x[]) dotted
             // with weight vector (this.weight[])
@@ -106,8 +106,8 @@ public class LogisticRegression_withBias {
             p_neg = (double) TN / (TN + FN);
             r_pos = (double) TP / (TP + FN);
             r_neg = (double) TN / (TN + FP);
-            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
-            f_neg = 2 * p_pos * r_neg / (p_neg + r_neg);
+            f_pos = (2 * p_pos * r_pos) / (p_pos + r_pos);
+            f_neg = (2 * p_neg * r_neg) / (p_neg + r_neg);
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
@@ -132,12 +132,12 @@ public class LogisticRegression_withBias {
                     for(int j = 0; j < X.length; j++){
                         this.weights[j] = this.weights[j] + this.rate * X[j] * (Y - prob);
                     }
-                    this.weights[X.length] += this.rate * (Y-prob); 
+                    this.weights[X.length] += this.rate * (Y-prob);
 
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
-                    double product = dotProd(X); 
-                    double bias = this.weights[X.length]; 
-                    lik = lik + (Y * (product + bias) - Math.log(1 + Math.exp(product + bias))); 
+                    double product = dotProd(X);
+                    double bias = this.weights[X.length];
+                    lik = lik + (Y * (product + bias) - Math.log(1 + Math.exp(product + bias)));
                 }
                 System.out.println("iteration: " + n + " lik: " + lik);
             }

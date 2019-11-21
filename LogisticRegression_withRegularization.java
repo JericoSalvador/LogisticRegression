@@ -24,7 +24,7 @@ public class LogisticRegression_withRegularization {
 
         /** TODO: Constructor initializes the weight vector. Initialize it by setting it to the 0 vector. **/
         public LogisticRegression_withRegularization(int n) { // n is the number of weights to be learned
-            this.weights = new double[n]; 
+            this.weights = new double[n];
 		}
 
         /** TODO: Implement the function that returns the L2 norm of the weight vector **/
@@ -100,13 +100,13 @@ public class LogisticRegression_withRegularization {
                     }
                 }
             }
-            acc = (double)(TP + TN) / (double) testInstances.size();
-            p_pos = (double) TP / (TP + FP);
+            acc = (double)(TP + TN) / (double) testInstances.size(); //good
+            p_pos = (double) TP / (TP + FP); //good
             p_neg = (double) TN / (TN + FN);
-            r_pos = (double) TP / (TP + FN);
+            r_pos = (double) TP / (TP + FN);//good
             r_neg = (double) TN / (TN + FP);
-            f_pos = 2 * p_pos * r_pos / (p_pos + r_pos);
-            f_neg = 2 * p_pos * r_neg / (p_neg + r_neg);
+            f_pos = (2 * p_pos * r_pos) / (p_pos + r_pos);
+            f_neg = (2 * p_neg * r_neg) / (p_neg + r_neg);
 
             System.out.println("Accuracy="+acc);
             System.out.println("P, R, and F1 score of the positive class=" + p_pos + " " + r_pos + " " + f_pos);
@@ -132,7 +132,7 @@ public class LogisticRegression_withRegularization {
                         this.weights[j] = this.weights[j] + this.rate * X[j] * (Y - prob) - this.rate * this.lambda * this.weights[j];
                     }
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
-                    double product = dotProd(X); 
+                    double product = dotProd(X);
                     lik = lik + (Y * product - Math.log(1 + Math.exp(product)));
 				}
                 System.out.println("iteration: " + n + " lik: " + lik);
