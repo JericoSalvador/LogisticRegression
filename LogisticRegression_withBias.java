@@ -101,7 +101,7 @@ public class LogisticRegression_withBias {
                     }
                 }
             }
-            acc = (double)(TP + TN) / (double)(TP + TN + FP + FP);
+            acc = (double)(TP + TN) / (double) testInstances.size();
             p_pos = (double) TP / (TP + FP);
             p_neg = (double) TN / (TN + FN);
             r_pos = (double) TP / (TP + FN);
@@ -132,7 +132,7 @@ public class LogisticRegression_withBias {
                     for(int j = 0; j < X.length; j++){
                         this.weights[j] = this.weights[j] + this.rate * X[j] * (Y - prob);
                     }
-                    this.weights[X.length] = this.rate * (Y-prob); 
+                    this.weights[X.length] =  this.rate * (Y-prob); 
 
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
                     double product = dotProd(X); 

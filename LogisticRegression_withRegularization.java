@@ -48,7 +48,7 @@ public class LogisticRegression_withRegularization {
             // Since sigmoid returns a value between 0-1.
             // this returns the probability of our input vector (x[]) dotted
             // with weight vector (this.weight[])
-            return sigmoid(value);
+            return sigmoid(dotProd(x));
         }
 
         // returns the dot product of input vector x and our global weight vector.
@@ -100,7 +100,7 @@ public class LogisticRegression_withRegularization {
                     }
                 }
             }
-            acc = (double)(TP + TN) / (double)(TP + TN + FP + FP);
+            acc = (double)(TP + TN) / (double) testInstances.size();
             p_pos = (double) TP / (TP + FP);
             p_neg = (double) TN / (TN + FN);
             r_pos = (double) TP / (TP + FN);
@@ -129,8 +129,7 @@ public class LogisticRegression_withRegularization {
                     double prob = probPred1(X);
 
                     for(int j = 0; j < this.weights.length; j++){
-                        this.weights[j] = this.weights[j] + this.rate * X[j] * (Y - prob);
-
+                        this.weights[j] = this.weights[j] + this.rate * X[j] * (Y - prob) - this.rate * this.lambda * this.weights[j];
                     }
                     // TODO: Compute the log-likelihood of the data here. Remember to take logs when necessary
                     double product = dotProd(X); 
